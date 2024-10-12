@@ -11,6 +11,21 @@ Este projeto consiste em um robô seguidor de linha, controlado por dois sensore
 #include <AFMotor.h>
 ```
 
+## Alternando entre Linhas Pretas e Linhas Brancas
+
+O robô possui uma chave conectada ao pino **A5**, que permite alternar entre seguir linhas **pretas** ou **brancas**. 
+Quando a chave está aberta (não conectada ao GND), o robô segue **linhas pretas** (com fundo branco). 
+Quando a chave está fechada (conectada ao GND), o robô segue **linhas brancas** (com fundo preto).
+
+### Implementação da Chave:
+- **Pino A5** é usado como uma entrada digital configurada com `INPUT_PULLUP`.
+- **Seguir linhas pretas**: Quando o pino A5 está em estado **alto**.
+- **Seguir linhas brancas**: Quando o pino A5 está em estado **baixo** (conectado ao GND).
+
+### Uso:
+- Conecte uma chave ao pino **A5** e ao **GND**.
+- O robô alternará entre seguir linhas pretas e linhas brancas com base no estado da chave.
+
 ## Sensores de Linha
 
 Os sensores de linha utilizam infravermelho (IR) para detectar a cor do chão:
@@ -132,4 +147,5 @@ bool on_cross_stop = false;
 O código utiliza o `Serial.begin(9600)` para exibir no monitor serial as leituras dos sensores. Isso facilita a depuração e o ajuste do comportamento do robô com base no ambiente.
 
 ---
+
 
