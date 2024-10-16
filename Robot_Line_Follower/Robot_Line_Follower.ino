@@ -9,7 +9,7 @@
 int speed = 230;
 int curve_speed = 230;
 bool on_cross_stop = false;
-bool follow_black_line = true; // Variável para decidir se deve seguir linhas pretas ou brancas
+bool follow_black_line = true;  // Variável para decidir se deve seguir linhas pretas ou brancas
 
 //defining motors
 AF_DCMotor motor1(1, MOTOR12_1KHZ);
@@ -20,8 +20,8 @@ AF_DCMotor motor4(4, MOTOR34_1KHZ);
 void setup() {
   pinMode(sensor_left, INPUT);
   pinMode(sensor_right, INPUT);
-  pinMode(mode_switch, INPUT_PULLUP); // Configurando o pino A5 como entrada com resistor pull-up
-  
+  pinMode(mode_switch, INPUT_PULLUP);  // Configurando o pino A5 como entrada com resistor pull-up
+
   Serial.begin(9600);
 }
 
@@ -34,7 +34,7 @@ void setup() {
 void loop() {
   // Atualiza o modo de operação com base no estado da chave
   follow_black_line = digitalRead(mode_switch);  // Chave ativada para seguir linha preta
-  
+
   // Leitura e impressão dos valores dos sensores no monitor serial
   Serial.print("Leitura Esquerda: ");
   Serial.println(digitalRead(sensor_left));
@@ -43,37 +43,37 @@ void loop() {
   Serial.println(digitalRead(sensor_right));
 
   // Modifica a lógica de acordo com o modo selecionado
-  if (follow_black_line) {
-    // Seguir linhas pretas (como no código original)
-    if (digitalRead(sensor_left) == 0 && digitalRead(sensor_right) == 0) {
+  // if (follow_black_line) {
+  //   // Seguir linhas pretas (como no código original)
+  //   if (digitalRead(sensor_left) == 0 && digitalRead(sensor_right) == 0) {
+  //     foward();
+  //   } else if (digitalRead(sensor_left) == 1 && digitalRead(sensor_right) == 0) {
+  //     turn_left();
+  //   } else if (digitalRead(sensor_left) == 0 && digitalRead(sensor_right) == 1) {
+  //     turn_right();
+  //   } else if (digitalRead(sensor_left) == 1 && digitalRead(sensor_right) == 1) {
+  //     if (on_cross_stop) {
+  //       stop();
+  //     } else {
+  //       foward();
+  //     }
+  //   }
+  // } else {
+  // Seguir linhas brancas (inverte a lógica)
+  if (digitalRead(sensor_left) == 1 && digitalRead(sensor_right) == 1) {
+    foward();
+  } else if (digitalRead(sensor_left) == 0 && digitalRead(sensor_right) == 1) {
+    turn_left();
+  } else if (digitalRead(sensor_left) == 1 && digitalRead(sensor_right) == 0) {
+    turn_right();
+  } else if (digitalRead(sensor_left) == 0 && digitalRead(sensor_right) == 0) {
+    if (on_cross_stop) {
+      stop();
+    } else {
       foward();
-    } else if (digitalRead(sensor_left) == 1 && digitalRead(sensor_right) == 0) {
-      turn_left();
-    } else if (digitalRead(sensor_left) == 0 && digitalRead(sensor_right) == 1) {
-      turn_right();
-    } else if (digitalRead(sensor_left) == 1 && digitalRead(sensor_right) == 1) {
-      if (on_cross_stop) {
-        stop();
-      } else {
-        foward();
-      }
-    }
-  } else {
-    // Seguir linhas brancas (inverte a lógica)
-    if (digitalRead(sensor_left) == 1 && digitalRead(sensor_right) == 1) {
-      foward();
-    } else if (digitalRead(sensor_left) == 0 && digitalRead(sensor_right) == 1) {
-      turn_left();
-    } else if (digitalRead(sensor_left) == 1 && digitalRead(sensor_right) == 0) {
-      turn_right();
-    } else if (digitalRead(sensor_left) == 0 && digitalRead(sensor_right) == 0) {
-      if (on_cross_stop) {
-        stop();
-      } else {
-        foward();
-      }
     }
   }
+  //}
 }
 
 // Função para mover para frente
